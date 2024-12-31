@@ -16,3 +16,23 @@ Translate PDF is a Python-based tool for extracting text from PDF files, transla
    ```bash
    git clone https://github.com/yourusername/translate-pdf.git
    cd translate-pdf
+    ```
+2. Create a virtual environment and activate it:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+3. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Usage
+1. Place your PDF files in the `data/` directory.
+2. Run the main script:
+    ```bash
+    python src/main.py
+    ```
+
+## Contributing
+Feel free to submit issues and pull requests to improve the project.
