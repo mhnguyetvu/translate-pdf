@@ -1,207 +1,140 @@
 ```vi
-" Machinetranslationusingnaturallanguageprocessing
-MiddiVenkataSaiRishita1,*,MiddiAppalaRaju2,andTanvirAhmedHarris3
-1RNSInstituteofTechnology,India
-2ChristUniversity,India
-3IITBombay,India
-Abstract.MachineTranslationisthetranslationoftextorspeechbya
-computerwithnohumaninvolvement.Itisapopulartopicinresearchwith
-differentmethodsbeingcreated,likerule-based,statisticalandexample-
-basedmachinetranslation.Neuralnetworkshavemadealeapforwardto
-machinetranslation.Thispaperdiscussesthebuildingofadeepneural
-networkthatfunctionsasapartofend-to-endtranslationpipeline.The
-completedpipelinewouldacceptEnglishtextasinputandreturnthe
-FrenchTranslation.Theprojecthasthreemainpartswhichare
-preprocessing,creationofmodelsandRunningthemodelonEnglishText.
-1Introduction
-Machinetranslation(MT)isadomainofcomputationallinguistics,whichexplorestheuse
-ofsoftwaretotranslatetextorspeechfromlanguagetoanother.Machinetranslationsimply
-performssubstitutionofwordsinonelanguageforwordsinother,butthatmaynotassure
-goodtranslation.Amoresophisticatedmethodwhichisalsoagrowingfieldusedto
-addresstheissueofrecognitionofmultiplephrasesiswithstatisticalandneuraltechnique.
-Inthistranslationoftextfromonelanguagetoanother,thereisnohumaninvolvementand
-itisthemachinewhichperformstheprocessofconversion.Therearethreetypesof
-machinetranslationsystem-rulesbased,statisticalandneural.Rulebasedisaconventional
-methodwhichisacombinationoflanguageandgrammarandthesupportofdictionaries.
-Thisworkfocussesonbuildinganendtoendmachinetranslationpipeline.Wehave
-discussedmultipleexistingarchitecturesandfinallyproposedahybridmodeltoachievea
-morepowerfulsystemformachinetranslationfromEnglishtoFrench.
-2Part1:Dataset
-ThefirststepintheimplementationofanyDeepLearningprojectistheinvestigationof
-DataSetthatwouldbeusedtotrainthepipelineaswellasevaluatethepipeline.Most
-commonly,thedatasetsusedforMachineTranslationarefromWMT(thewebsitethatis
-dedicatedtoresearchinstatisticalmachinetranslation).Duetotimeconstraints,thedataset
-containssmallvocabulary.Thisfacilitatesthetraininginareasonabletime.
-*Correspondingauthor:rishimiddi@gmail.com 
+"Machine translation using natural language processing
+Middi Venkata Sai Rishita1,*, Middi Appala Raju2, and Tanvir Ahmed Harris3
+1 RNS Institute of Technology, India
+2 Christ University, India
+3 IIT Bombay, India
+Abstract. Machine Translation is the translation of text or speech by a
+computer with no human involvement. It is a popular topic in research with
+different methods being created, like rule-based, statistical and example-
+based machine translation. Neural networks have made a leap forward to
+machine translation. This paper discusses the building of a deep neural
+network that functions as a part of an end-to-end translation pipeline. The
+completed pipeline would accept English text as input and return the
+French Translation. The project has three main parts which are
+preprocessing, creation of models and Running the model on English Text.
+1 Introduction
+Machine translation (MT) is a domain of computational linguistics, which explores the use
+of software to translate text or speech from language to another. Machine translation simply
+performs substitution of words in one language for words in other, but that may not assure
+good translation. A more sophisticated method which is also a growing field used to
+address the issue of recognition of multiple phrases is with statistical and neural technique.
+In this translation of text from one language to another, there is no human involvement and
+it is the machine which performs the process of conversion. There are three types of
+machine translation system - rule-based, statistical and neural. Rule-based is a conventional
+method which is a combination of language and grammar and the support of dictionaries.
+This work focuses on building an end-to-end machine translation pipeline. We have
+discussed multiple existing architectures and finally proposed a hybrid model to achieve a
+more powerful system for machine translation from English to French.
+2 Part1: Dataset
+The first step in the implementation of any Deep Learning project is the investigation of
+DataSet that would be used to train the pipeline as well as evaluate the pipeline. Most
+commonly, the datasets used for Machine Translation are from WMT (the website that is
+dedicated to research in statistical machine translation). Due to time constraints, the dataset
+contains small vocabulary. This facilitates the training in a reasonable time.
+* Corresponding author: rishimiddi@gmail.com
 © The Authors, published by EDP Sciences. This is an open access article distributed under the terms of the Creative Commons 
-Attribution License 4.0 (http://creativecommons.org/licenses/by/4.0/).MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018 
-Thedatalocatedinafilepathisloaded.ThefilecontainsEnglishsentenceswiththeir
-Frenchtranslations.Loadthedatafromthesefiles.Printthefirsttwolinesfromeachfile.
-Fig.1.FirsttwolinesofEnglishandFrenchfromeachfile.
-Inthefigureabove,thepunctuationshavebeendelimitedusingspaces.Theconversion
-tolowercasehasbeendone.Thecomplexityofvocabularydeterminesthecomplexityof
-theproblem.Thecomplexityofthedatasetisgivenbelow.
-Fig.2.Thecomplexityofdataset.
-3Part2:Pre-processthedata
-Thetextdataisnotusedasinputtothemodel.Thetextisconvertedintosequencesof
-integersusingthepre-processmethodswhichareTokenizationandadditionofPadding.
-3.1Tokenize(Implementation)
-Theneuralnetworkhastocomprehendtheinputdataforittopredictontextdata.The
-networkcanunderstandASCIIcharacters.Thetextdatalike“dog”isasequenceofASCII
-characterencodings.Theoperationsperformedonnetworkincludemultiplicationand
-additionoperations,hence,textisconvertedtonumbers.
-Eachcharacterandwordisassignedanumber,conventionallycalledcharacterIDsand
-wordIDs,respectively.Awordlevelmodelusedwordidsthatgeneratetextpredictionsfor
-everyword.Thishaslowercomplexitycomparedtocharacterlevelmodel.
-KerashasautilityclassknownasTokenizer.Thisclassallowstovectorizeatextcorpus,
-byturningeachtextintoeitherasequenceofintegersorintoavectorwherethecoefficient
-foreachtokencouldbebinary,basedonwordcount.Runtokenizeonsampledataandsow
-theoutputfordebugging.
-Fig.3.Outputofdebugging.
-3.2Padding(Implementation)
-Whenbatchingthesequenceofwordidstogether,eachsequenceneedstobethesame
-2
-MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018
-Thedatalocatedinafilepathisloaded.ThefilecontainsEnglishsentenceswiththeir
-Frenchtranslations.Loadthedatafromthesefiles.Printthefirsttwolinesfromeachfile.
-Fig.1.FirsttwolinesofEnglishandFrenchfromeachfile.
-Inthefigureabove,thepunctuationshavebeendelimitedusingspaces.Theconversion
-tolowercasehasbeendone.Thecomplexityofvocabularydeterminesthecomplexityof
-theproblem.Thecomplexityofthedatasetisgivenbelow.
-Fig.2.Thecomplexityofdataset.
-3Part2:Pre-processthedata
-Thetextdataisnotusedasinputtothemodel.Thetextisconvertedintosequencesof
-integersusingthepre-processmethodswhichareTokenizationandadditionofPadding.
-3.1Tokenize(Implementation)
-Theneuralnetworkhastocomprehendtheinputdataforittopredictontextdata.The
-networkcanunderstandASCIIcharacters.Thetextdatalike“dog”isasequenceofASCII
-characterencodings.Theoperationsperformedonnetworkincludemultiplicationand
-additionoperations,hence,textisconvertedtonumbers.
-Eachcharacterandwordisassignedanumber,conventionallycalledcharacterIDsand
-wordIDs,respectively.Awordlevelmodelusedwordidsthatgeneratetextpredictionsfor
-everyword.Thishaslowercomplexitycomparedtocharacterlevelmodel.
-KerashasautilityclassknownasTokenizer.Thisclassallowstovectorizeatextcorpus,
-byturningeachtextintoeitherasequenceofintegersorintoavectorwherethecoefficient
-foreachtokencouldbebinary,basedonwordcount.Runtokenizeonsampledataandsow
-theoutputfordebugging.
-Fig.3.Outputofdebugging.
-3.2Padding(Implementation)
-Whenbatchingthesequenceofwordidstogether,eachsequenceneedstobethesamelength.Sincethesentencesaredynamicinlength,paddingisdoneattheendofsentences
-tomakethemthesamelength.ThefunctionusedtoperformpaddingispresentinKerasas
-pad_sequences.Ittakesthreeparameterswhichisx-Listofsequences,length-Lengthto
-padtoandreturnpaddednumpyarrayofsequences.Theoutputofpaddingisgivenbelow.
-Fig.4.Outputofpadding.
-3.3Pre-processPipeline
-TheKeraspreprocessfunctionisusedtocreatepreprocesspipeline.Ittakestwoparameters
-x-FeatureListofsequences,y-LabelListofsentencesandreturnatupleofpreprocessedx,
-preprocessedy,xtokenizer,ytokenizer.TheKeras’ssparse_categorical_crossentropy
-functionrequireslabelstobeinthreedimensions.
-4Models
-Inthiswork,wehaveexperimentedonvariousneuralnetworkarchitectureswhichinclude
-simpleRecurrentNeuralNetwork,simpleRNNwithembedding,aBidirectionalRNNand
-anEncoder-DecoderRNN.Wehavecomparedthefunctioningofthesefourarchitectures.
-Thefinalarchitecturewasbuilttooutperformallthefourmodelsdiscussedabove.
-TheneuralnetworkneedstogivetheFrenchTranslationbutitwouldbetranslatingthe
-inputtowordids.Thefunctionlogits_to_textwillbridgethegabbetweenthelogitsfrom
-theneuralnetworktotheFrenchtranslation.Itusestokenizertoturnlogitsfromaneural
-networktotheFrenchtranslation.
-4.1SimpleRNNImplementation
-BuildandtrainabasicRNNonxandy.TheparametersincludeaTupleofinputshape,
-lengthofoutputsequence,numberofuniqueEnglishwordsinthedatasetandthenumber
-ofuniqueFrenchwordsinthedataset.ItreturnsabuiltKerasmodel.
-Afterthis,traintheneuralnetworkandreducethebatchsizeto100from1024andprint
-theprediction.Priortotrainingtheneuralnetwork,thelayersarebuiltandreshapetheinput
-toworkwithabasicRecurrentneuralnetwork.
-Theinformationaboutthelayersandparametersaregivenbelowinthepicture
-Fig.5.ArchitectureofaSimpleRNN.
-3
-MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018
-4.2RNNwithEmbedding
-Anembeddingisavectorrepresentationofthewordthatisclosetosimilarwordsinn-
-dimensionalspace,wherethenrepresentsthesizeoftheembeddingvectors.Insteadof
-turningthewordsintoids,wordembeddingsareused.Theinputisreshapedbeforetraining
-theneuralnetwork.Thepassedindexlengthisincreasedby1toavoidindexerror.After
-this,thebatchsizeisreducedto100.Thenumberofepochstakenis10andthevalidation
-splitis0.2.Thepredictionisprinted.
-Fig.6.ArchitectureofRNNwithEmbedding.
-4.3BidirectionalRNNs
-TheRNNoutputsdependonpresentinputsandthememoryofthepreviousoutputs.But
-RecurrentNeuralNetworksdon’tseethefutureinput.Thus,BidirectionalRNNareused.A
-BidirectionalRNNisaneuralnetworkinwhichtheneuronsofaregularRNNaresplitinto
-twodirections-positivetimedirectionandnegativetimedirection.Forinvolvingfuture
-information,delaysneednotbeaddedwhen2timedirectionsareincorporated.Implement
-theBidirectionalRNNbyusingthetanhactivationfunction.
-Fig.7.ArchitectureofBidirectionalRNN.
-4.4Encoder-DecoderModels
-Themodelconsistsismadeupofanencoderanddecoder.Theencodercreatesamatrix
-representationofthesentence.Thedecodertakesthismatrixasinputandpredictsthe
-translationasoutput.Whileimplementingtheencoderreversetheinputsequenceorderfor
-improvedaccuracy.Designanadaptertofit2-dimensionaloutputtorequired3-
-dimensionalinputshape[samples,timesteps,features].Thestepsinvolvedinencoder
-4
-MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018
-4.2RNNwithEmbedding
-Anembeddingisavectorrepresentationofthewordthatisclosetosimilarwordsinn-
-dimensionalspace,wherethenrepresentsthesizeoftheembeddingvectors.Insteadof
-turningthewordsintoids,wordembeddingsareused.Theinputisreshapedbeforetraining
-theneuralnetwork.Thepassedindexlengthisincreasedby1toavoidindexerror.After
-this,thebatchsizeisreducedto100.Thenumberofepochstakenis10andthevalidation
-splitis0.2.Thepredictionisprinted.
-Fig.6.ArchitectureofRNNwithEmbedding.
-4.3BidirectionalRNNs
-TheRNNoutputsdependonpresentinputsandthememoryofthepreviousoutputs.But
-RecurrentNeuralNetworksdon’tseethefutureinput.Thus,BidirectionalRNNareused.A
-BidirectionalRNNisaneuralnetworkinwhichtheneuronsofaregularRNNaresplitinto
-twodirections-positivetimedirectionandnegativetimedirection.Forinvolvingfuture
-information,delaysneednotbeaddedwhen2timedirectionsareincorporated.Implement
-theBidirectionalRNNbyusingthetanhactivationfunction.
-Fig.7.ArchitectureofBidirectionalRNN.
-4.4Encoder-DecoderModels
-Themodelconsistsismadeupofanencoderanddecoder.Theencodercreatesamatrix
-representationofthesentence.Thedecodertakesthismatrixasinputandpredictsthe
-translationasoutput.Whileimplementingtheencoderreversetheinputsequenceorderfor
-improvedaccuracy.Designanadaptertofit2-dimensionaloutputtorequired3-
-dimensionalinputshape[samples,timesteps,features].Thestepsinvolvedinencodermodelareasfollows:
-1.Reverseinputsequenceorderforimprovedaccuracy.
-2.Adaptertofit2Doutputtorequired3Dinputshape[samples,timesteps,features]
-Thedecoderisimplementedafterthis.Theneuralnetworkistrainedandpredictionis
+Attribution License 4.0 (http://creativecommons.org/licenses/by/4.0/). MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 JCMME 2018
+The data located in a filepath is loaded. The file contains English sentences with their
+French translations. Load the data from these files. Print the first two lines from each file.
+Fig.1. First two lines of English and French from each file.
+In the figure above, the punctuations have been delimited using spaces. The conversion
+to lowercase has been done. The complexity of vocabulary determines the complexity of
+the problem. The complexity of the dataset is given below.
+Fig.2. The complexity of dataset.
+3 Part2: Pre-process the data
+The text data is not used as input to the model. The text is converted into sequences of
+integers using the pre-process methods which are Tokenization and addition of Padding.
+3.1 Tokenize (Implementation)
+The neural network has to comprehend the input data for it to predict on text data. The
+network can understand ASCII characters. The text data like “dog” is a sequence of ASCII
+character encodings. The operations performed on network include multiplication and
+addition operations, hence, text is converted to numbers.
+Each character and word is assigned a number, conventionally called character IDs and
+word IDs, respectively. A word level model uses word ids that generate text predictions for
+every word. This has lower complexity compared to character level model.
+Keras has a utility class known as Tokenizer. This class allows to vectorize a text corpus,
+by turning each text into either a sequence of integers or into a vector where the coefficient
+for each token could be binary, based on word count. Run tokenize on sample data and sow
+the output for debugging.
+Fig.3. Output of debugging.
+3.2 Padding (Implementation)
+When batching the sequence of word ids together, each sequence needs to be the same
+length. Since the sentences are dynamic in length, padding is done at the end of sentences
+to make them the same length. The function used to perform padding is present in Keras as
+pad_sequences. It takes three parameters which is x - List of sequences, length - Length to
+pad to and return padded numpy array of sequences. The output of padding is given below.
+Fig.4. Output of padding.
+3.3 Pre-process Pipeline
+The Keras preprocess function is used to create preprocess pipeline. It takes two parameters
+x - Feature List of sequences, y - Label List of sentences and return a tuple of preprocessed x,
+preprocessed y, x tokenizer, y tokenizer. The Keras’s sparse_categorical_crossentropy
+function requires labels to be in three dimensions.
+4 Models
+In this work, we have experimented on various neural network architectures which include
+simple Recurrent Neural Network, simple RNN with embedding, a Bidirectional RNN and
+an Encoder-Decoder RNN. We have compared the functioning of these four architectures.
+The final architecture was built to outperform all the four models discussed above.
+The neural network needs to give the French Translation but it would be translating the
+input to word ids. The function logits_to_text will bridge the gap between the logits from
+the neural network to the French translation. It uses tokenizer to turn logits from a neural
+network to the French translation.
+4.1 Simple RNN Implementation
+Build and train a basic RNN on x and y. The parameters include a Tuple of input shape,
+length of output sequence, number of unique English words in the dataset and the number
+of unique French words in the dataset. It returns a built Keras model.
+After this, train the neural network and reduce the batch size to 100 from 1024 and print
+the prediction. Prior to training the neural network, the layers are built and reshape the input
+to work with a basic Recurrent neural network.
+The information about the layers and parameters are given below in the picture
+Fig.5. Architecture of a Simple RNN.
+4.2 RNN with Embedding
+An embedding is a vector representation of the word that is close to similar words in n-
+dimensional space, where n represents the size of the embedding vectors. Instead of
+turning the words into ids, word embeddings are used. The input is reshaped before training
+the neural network. The passed index length is increased by 1 to avoid index error. After
+this, the batch size is reduced to 100. The number of epochs taken is 10 and the validation
+split is 0.2. The prediction is printed.
+Fig.6. Architecture of RNN with Embedding.
+4.3 Bidirectional RNNs
+The RNN outputs depend on present inputs and the memory of the previous outputs. But
+Recurrent Neural Networks don’t see the future input. Thus, Bidirectional RNN are used. A
+Bidirectional RNN is a neural network in which the neurons of a regular RNN are split into
+two directions - positive time direction and negative time direction. For involving future
+information, delays need not be added when 2 time directions are incorporated. Implement
+the Bidirectional RNN by using the tanh activation function.
+Fig.7. Architecture of Bidirectional RNN.
+4.4 Encoder-Decoder Models
+The model consists is made up of an encoder and decoder. The encoder creates a matrix
+representation of the sentence. The decoder takes this matrix as input and predicts the
+translation as output. While implementing the encoder reverse the input sequence order for
+improved accuracy. Design an adapter to fit 2-dimensional output to required 3-
+dimensional input shape [samples, timesteps, features]. The steps involved in encoder
+model are as follows:
+1. Reverse input sequence order for improved accuracy.
+2. Adapter to fit 2D output to required 3D input shape [samples, timesteps, features]
+The decoder is implemented after this. The neural network is trained and prediction is
 printed.
-Fig.8.Architectureofencoder-decodermodel.
-4.5Proposedmodel
-Intheproposedmodel,firstembeddingisdoneafterwhichabidirectionalencoderisadded.
-Addanadaptertofit2DoutputtorequiredGRU3Dinputshape[samples,timesteps,
+Fig.8. Architecture of encoder-decoder model.
+4.5 Proposed model
+In the proposed model, first embedding is done after which a bidirectional encoder is added.
+Add an adapter to fit 2D output to required GRU 3D input shape [samples, timesteps,
 features].
-Finallyimplementthedecoder.Thearchitectureisgivenbelow.
-Fig.9.Architectureoftheproposedmodel.
-Fig.10.Originaltextandtranslation.
-5Results
-ThefinalsentencetranslationsarereturnedinFrenchwithanappreciableaccuracyof
-96.71%ThesamplesofFrenchtranslationsthatwerereturnedisgivenbelow;
-5
-MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018
-6Conclusions
-Thus,wehavebuiltadeepneuralnetworkthatfunctionsaspartofanend-to-endmachine
-translationpipelinetoconvertEnglishtextasinputandreturntheFrenchtranslation.The
-proposednetworkperformedfarbetterthantheotherarchitecturesdiscussedpreviouslyin
-termsofthevalidationloss.Theaccuracywas96.71%.Arandomseedwasfixedfor
-reproducibility,a3-foldcrossvalidationtestharnesswasdeterminedandthemodelwas
-compiledandevaluated.
+Finally implement the decoder. The architecture is given below.
+Fig.9. Architecture of the proposed model.
+Fig.10. Original text and translation.
+5 Results
+The final sentence translations are returned in French with an appreciable accuracy of
+96.71% The samples of French translations that were returned is given below;
+6 Conclusions
+Thus, we have built a deep neural network that functions as part of an end-to-end machine
+translation pipeline to convert English text as input and return the French translation. The
+proposed network performed far better than the other architectures discussed previously in
+terms of the validation loss. The accuracy was 96.71%. A random seed was fixed for
+reproducibility, a 3-fold cross validation test harness was determined and the model was
+compiled and evaluated.
 References
-1.Kerasdocumentation
-2.SBSallon“Examplebasedmachinetranslationusingnaturallanguageprocessing”
-2013
-3.GurleenKaursidhuon“RoleofMachineTranslationandWordsenseDisambiguation
-inNaturalLanguageProcessing”2013
-4.MVReddyon“NLPChallengesformachinetranslationfromenglishtoIndian
-languages”
-5.KehaiChen,TiejunZhaoon“AneuralApproachtosourcedependancebased
-ContextmodelforStatisticalMachineTranslation”2018
-6
-MATEC Web of Conferences 277, 02004 (2019)  https://doi.org/10.1051/matecconf/201927702004 
-JCMME 2018 
+1. Keras documentation 2. SBS all on “Example based machine translation using natural language processing” 2013
+3. Gurleen Kaur sidhu on “Role of Machine Translation and Word sense Disambiguation in Natural Language Processing” 2013
+4. MV Reddy on “NLP Challenges for machine translation from english to Indian languages” 5. Kehai Chen, Tiejun Zhao on “A neural Approach to source dependance based Context model for Statistical Machine Translation” 2018
 ```
